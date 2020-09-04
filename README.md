@@ -20,7 +20,7 @@ helm repo update
 At the bare minimum you need to configure the values image.repository and image.tag to specify which image to use in the deployment.
 
 ```
-helm install my-release plenus/example-app-mongodb --namespace=my-namespace --set image.repository=node --set image.tag=14.9.0 --wait --atomic
+helm install my-release plenus/example-app-mongodb --namespace=my-namespace --set image.repository=nginxdemos/hello --set image.tag=0.2 --wait --atomic
 ```
 
 If you need to configure environment variables for the deployment you have to use a values files, for example:
