@@ -16,6 +16,7 @@
   echo http://$SERVICE_IP:{{ .Values.service.port }}
 {{- else if contains "ClusterIP" .Values.service.type }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "example-app-mongodb.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  export POD_PORT=$(kubectl get pods -l "app.kubernetes.io/name=example-app-mongodb,app.kubernetes.io/instance=my-release" -o jsonpath="{.items[0].spec.containers[0].ports[0].containerPort}")
   echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$(kubectl get pods -l "app.kubernetes.io/name=example-app-mongodb,app.kubernetes.io/instance=my-release" -o jsonpath="{.items[0].spec.containers[0].ports[0].containerPort}")
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$POD_PORT
 {{- end }}
