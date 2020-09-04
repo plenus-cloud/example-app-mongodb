@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "example-app-mongodb.fullname" . }}
+  labels:
+    {{- include "example-app-mongodb.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.deployment.port }}
+      protocol: TCP
+      name: {{ .Values.deployment.portName }}
+  selector:
+    {{- include "example-app-mongodb.selectorLabels" . | nindent 4 }}
